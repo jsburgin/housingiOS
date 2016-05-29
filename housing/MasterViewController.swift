@@ -8,22 +8,43 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, UISplitViewControllerDelegate {
 
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
 
+    @IBOutlet weak var header: UINavigationItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
-        self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        
+        splitViewController?.delegate = self
+        refreshControl?.addTarget(self, action: #selector(MasterViewController.refreshSchedule), forControlEvents: .ValueChanged)
+        refreshControl?.tintColor = UIColor.lightGrayColor()
+        refreshSchedule()
+    }
+    
+    func refreshSchedule() {
+        Retriever.getSchedule("dwzheng@crimson.ua.edu") { data, error in
+            
+            if let schedule = data {
+                self.objects.removeAll()
+                for (_, subJson) in schedule["events"] {
+                    if let newEvent = Event.build(subJson) {
+                        self.objects.append(newEvent)
+                    }
+                }
+                
+                self.tableView.reloadData()
+                self.refreshControl?.endRefreshing()
+            }
+            
+            if let err = error {
+                print(err)
+                self.refreshControl?.endRefreshing()
+            }
+            
         }
     }
 
@@ -70,8 +91,8 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let event = objects[indexPath.row] as! Event
+        cell.textLabel!.text = event.title
         return cell
     }
 
@@ -88,7 +109,11 @@ class MasterViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-
+    
+    
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+        return true
+    }
 
 }
 
