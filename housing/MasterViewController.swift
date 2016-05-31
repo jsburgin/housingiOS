@@ -19,10 +19,17 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        configureView()
+    }
+    
+    func configureView() {
         splitViewController?.delegate = self
         refreshControl?.addTarget(self, action: #selector(MasterViewController.refreshSchedule), forControlEvents: .ValueChanged)
         refreshControl?.tintColor = UIColor.lightGrayColor()
         refreshSchedule()
+        
+        tableView.rowHeight = 64
+        
     }
     
     func refreshSchedule() {
@@ -89,10 +96,22 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
 
         let event = objects[indexPath.row] as! Event
-        cell.textLabel!.text = event.title
+        cell.titleLabel.text = event.title
+        cell.timeLabel.text = "\(event.startTime)"
+        
+        if let eventEndTime = event.endTime {
+            
+            if eventEndTime != "" {
+                cell.timeLabel.text = "\(event.startTime) - \(eventEndTime)"
+            }
+            
+        }
+        
+        cell.locationLabel.text = "@ \(event.location)"
+        
         return cell
     }
 
