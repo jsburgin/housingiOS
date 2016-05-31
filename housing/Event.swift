@@ -17,14 +17,16 @@ class Event: NSObject {
     let endTime: String?
     let location: String
     let date: String
+    let prettyDate: String
     
-    init (title: String, desc: String, startTime: String, endTime: String?, location: String, date: String) {
+    init (title: String, desc: String, startTime: String, endTime: String?, location: String, date: String, prettyDate: String) {
         self.title = title
         self.desc = desc
         self.startTime = startTime
         self.endTime = endTime
         self.location = location
         self.date = date
+        self.prettyDate = prettyDate
     }
     
     class func build(json: JSON) -> Event? {
@@ -34,6 +36,7 @@ class Event: NSObject {
             desc = json["description"].string,
             startTime = json["prettyStartTime"].string,
             location = json["location"].string,
+            prettyDate = json["prettyDate"].string,
             date = json["date"].string {
             
             return  Event(
@@ -42,7 +45,8 @@ class Event: NSObject {
                 startTime: startTime,
                 endTime: json["prettyEndTime"].string,
                 location: location,
-                date: date
+                date: date,
+                prettyDate: prettyDate
             )
             
         }

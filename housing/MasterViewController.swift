@@ -12,6 +12,7 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
 
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
+    var schedule = Schedule()
 
     @IBOutlet weak var header: UINavigationItem!
 
@@ -36,10 +37,10 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
         Retriever.getSchedule("dwzheng@crimson.ua.edu") { data, error in
             
             if let schedule = data {
-                self.objects.removeAll()
+                self.schedule.removeAll()
                 for (_, subJson) in schedule["events"] {
                     if let newEvent = Event.build(subJson) {
-                        self.objects.append(newEvent)
+                        self.schedule.addEvent(newEvent)
                     }
                 }
                 
@@ -88,26 +89,25 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return self.schedule.days.count
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return self.schedule.days[section].events.count
     }
-
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("EventCell", forIndexPath: indexPath) as! EventTableViewCell
 
-        let event = objects[indexPath.row] as! Event
+        let event = schedule.days[indexPath.section].events[indexPath.row]
+        
         cell.titleLabel.text = event.title
         cell.timeLabel.text = "\(event.startTime)"
         
         if let eventEndTime = event.endTime {
-            
             if eventEndTime != "" {
                 cell.timeLabel.text = "\(event.startTime) - \(eventEndTime)"
             }
-            
         }
         
         cell.locationLabel.text = "@ \(event.location)"
@@ -119,16 +119,18 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
         // Return false if you do not want the specified item to be editable.
         return true
     }
-
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            objects.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
+    
+    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let sectionHeader = tableView.dequeueReusableCellWithIdentifier("SectionHeader") as! SectionHeaderTableViewCell
+        
+        sectionHeader.titleLabel.text = self.schedule.days[section].name
+        
+        return sectionHeader
     }
     
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30.0
+    }
     
     func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
         return true
