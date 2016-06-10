@@ -8,11 +8,13 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController, UISplitViewControllerDelegate {
+class MasterViewController: UITableViewController, UISplitViewControllerDelegate, UIApplicationDelegate {
 
     var detailViewController: DetailViewController? = nil
     var objects = [AnyObject]()
     var schedule = Schedule()
+    
+    var email : String?
 
     @IBOutlet weak var header: UINavigationItem!
 
@@ -34,26 +36,29 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
     }
     
     func refreshSchedule() {
-        Retriever.getSchedule("dwzheng@crimson.ua.edu") { data, error in
-            
-            if let schedule = data {
-                self.schedule.removeAll()
-                for (_, subJson) in schedule["events"] {
-                    if let newEvent = Event.build(subJson) {
-                        self.schedule.addEvent(newEvent)
+        if let fetchEmail = self.email {
+            Retriever.getSchedule(fetchEmail) { data, error in
+                
+                if let schedule = data {
+                    self.schedule.removeAll()
+                    for (_, subJson) in schedule["events"] {
+                        if let newEvent = Event.build(subJson) {
+                            self.schedule.addEvent(newEvent)
+                        }
                     }
+                    
+                    self.tableView.reloadData()
+                    self.refreshControl?.endRefreshing()
                 }
                 
-                self.tableView.reloadData()
-                self.refreshControl?.endRefreshing()
+                if let err = error {
+                    print(err)
+                    self.refreshControl?.endRefreshing()
+                }
+                
             }
-            
-            if let err = error {
-                print(err)
-                self.refreshControl?.endRefreshing()
-            }
-            
         }
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -75,11 +80,11 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
     // MARK: - Segues
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showDetail" {
+        if segue.identifier == "showEvent" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
+                let event = self.schedule.days[indexPath.section].events[indexPath.row]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.event = event
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
