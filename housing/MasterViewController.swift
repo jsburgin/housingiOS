@@ -14,13 +14,31 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
     var objects = [AnyObject]()
     var schedule = Schedule()
     
-    var email : String?
+    var apiKey: String?
 
     @IBOutlet weak var header: UINavigationItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        let prefs = NSUserDefaults.standardUserDefaults()
+        
+        if let apiKey = prefs.stringForKey("apiKey") {
+            self.apiKey = apiKey
+            
+            let application = UIApplication.sharedApplication()
+            
+            let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
+            let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+            
+            application.registerUserNotificationSettings(pushNotificationSettings)
+            
+            
+            application.registerForRemoteNotifications()
+        }
+        
+        
         
         configureView()
     }
@@ -36,8 +54,8 @@ class MasterViewController: UITableViewController, UISplitViewControllerDelegate
     }
     
     func refreshSchedule() {
-        if let fetchEmail = self.email {
-            Retriever.getSchedule(fetchEmail) { data, error in
+        if let apiKey = self.apiKey {
+            Retriever.getSchedule(apiKey) { data, error in
                 
                 if let schedule = data {
                     self.schedule.removeAll()

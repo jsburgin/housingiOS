@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		031014DB1D1EEDCC00BEFEB0 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031014DA1D1EEDCC00BEFEB0 /* TabBarController.swift */; };
 		032929B11CF7ECE400D2F50F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032929B01CF7ECE400D2F50F /* AppDelegate.swift */; };
 		032929B31CF7ECE400D2F50F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032929B21CF7ECE400D2F50F /* MasterViewController.swift */; };
 		032929B51CF7ECE400D2F50F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 032929B41CF7ECE400D2F50F /* DetailViewController.swift */; };
@@ -21,6 +22,8 @@
 		036EF1D41CFD4EBA00F7C71B /* SectionHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036EF1D31CFD4EBA00F7C71B /* SectionHeaderTableViewCell.swift */; };
 		036EF1D61CFD69FF00F7C71B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036EF1D51CFD69FF00F7C71B /* LoginViewController.swift */; };
 		038142C31CFD05C500565866 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 038142C21CFD05C500565866 /* EventTableViewCell.swift */; };
+		039680D61D0A6DD8000D51F6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 039680D51D0A6DD8000D51F6 /* GoogleService-Info.plist */; };
+		039680D91D0A6F77000D51F6 /* project-Bridging-Header.m in Sources */ = {isa = PBXBuildFile; fileRef = 039680D81D0A6F77000D51F6 /* project-Bridging-Header.m */; };
 		69CD7BC358414A7355096AA9 /* Pods_housingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5ACFB519AE82289A8CE7461 /* Pods_housingTests.framework */; };
 		A38B34B629153760F67B1351 /* Pods_housingUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D45D0F9D78CB67B1A49E7D5 /* Pods_housingUITests.framework */; };
 		DDFB45737AFFFB6E1A5A83F0 /* Pods_housing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6521B2E9B222AB0184FB3D /* Pods_housing.framework */; };
@@ -44,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		031014DA1D1EEDCC00BEFEB0 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		032929AD1CF7ECE400D2F50F /* housing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = housing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		032929B01CF7ECE400D2F50F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		032929B21CF7ECE400D2F50F /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -64,6 +68,9 @@
 		036EF1D31CFD4EBA00F7C71B /* SectionHeaderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionHeaderTableViewCell.swift; sourceTree = "<group>"; };
 		036EF1D51CFD69FF00F7C71B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		038142C21CFD05C500565866 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		039680D51D0A6DD8000D51F6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		039680D71D0A6F77000D51F6 /* housing-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "housing-Bridging-Header.h"; sourceTree = "<group>"; };
+		039680D81D0A6F77000D51F6 /* project-Bridging-Header.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "project-Bridging-Header.m"; path = "../project-Bridging-Header.m"; sourceTree = "<group>"; };
 		3ED04EE99B2FC4D41AB3BE1D /* Pods-housingUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-housingUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-housingUITests/Pods-housingUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4D45D0F9D78CB67B1A49E7D5 /* Pods_housingUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_housingUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E645689C9F4E46C92380F52 /* Pods-housingUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-housingUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-housingUITests/Pods-housingUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,6 +119,7 @@
 				032929AE1CF7ECE400D2F50F /* Products */,
 				C605EB29B6036DF2B2504576 /* Pods */,
 				9CF05F977E1BBE73DE89BB96 /* Frameworks */,
+				039680D71D0A6F77000D51F6 /* housing-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,6 +136,8 @@
 		032929AF1CF7ECE400D2F50F /* housing */ = {
 			isa = PBXGroup;
 			children = (
+				039680D81D0A6F77000D51F6 /* project-Bridging-Header.m */,
+				039680D51D0A6DD8000D51F6 /* GoogleService-Info.plist */,
 				036EF1D01CFD163800F7C71B /* Models */,
 				036EF1CF1CFD161F00F7C71B /* Controllers */,
 				036EF1CE1CFD160A00F7C71B /* Views */,
@@ -171,9 +181,10 @@
 			children = (
 				032929B21CF7ECE400D2F50F /* MasterViewController.swift */,
 				032929B41CF7ECE400D2F50F /* DetailViewController.swift */,
-				038142C21CFD05C500565866 /* EventTableViewCell.swift */,
 				036EF1D31CFD4EBA00F7C71B /* SectionHeaderTableViewCell.swift */,
 				036EF1D51CFD69FF00F7C71B /* LoginViewController.swift */,
+				038142C21CFD05C500565866 /* EventTableViewCell.swift */,
+				031014DA1D1EEDCC00BEFEB0 /* TabBarController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -329,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				032929BD1CF7ECE400D2F50F /* LaunchScreen.storyboard in Resources */,
+				039680D61D0A6DD8000D51F6 /* GoogleService-Info.plist in Resources */,
 				032929BA1CF7ECE400D2F50F /* Assets.xcassets in Resources */,
 				032929B81CF7ECE400D2F50F /* Main.storyboard in Resources */,
 			);
@@ -480,12 +492,14 @@
 			files = (
 				036EF1D61CFD69FF00F7C71B /* LoginViewController.swift in Sources */,
 				036EF1D41CFD4EBA00F7C71B /* SectionHeaderTableViewCell.swift in Sources */,
+				031014DB1D1EEDCC00BEFEB0 /* TabBarController.swift in Sources */,
 				038142C31CFD05C500565866 /* EventTableViewCell.swift in Sources */,
 				035EE9FA1CF8035000D21D13 /* Retriever.swift in Sources */,
 				032929E11CF7ED9C00D2F50F /* Event.swift in Sources */,
 				032929B51CF7ECE400D2F50F /* DetailViewController.swift in Sources */,
 				032929B31CF7ECE400D2F50F /* MasterViewController.swift in Sources */,
 				036EF1D21CFD2CBC00F7C71B /* Schedule.swift in Sources */,
+				039680D91D0A6F77000D51F6 /* project-Bridging-Header.m in Sources */,
 				032929B11CF7ECE400D2F50F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -634,6 +648,7 @@
 			baseConfigurationReference = D8D4BD9282DC3904D2DE0A61 /* Pods-housing.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = housing/Info.plist;
@@ -641,6 +656,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.burgin.uahousing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8a93f8d6-681d-4591-adb4-5b93cc7ed181";
+				SWIFT_OBJC_BRIDGING_HEADER = "housing-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -649,6 +666,7 @@
 			baseConfigurationReference = BB67156F1A58E1CFAD99CDEF /* Pods-housing.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = housing/Info.plist;
@@ -656,6 +674,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.burgin.uahousing;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "8a93f8d6-681d-4591-adb4-5b93cc7ed181";
+				SWIFT_OBJC_BRIDGING_HEADER = "housing-Bridging-Header.h";
 			};
 			name = Release;
 		};

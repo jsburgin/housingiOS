@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Google
+import GoogleSignIn
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
 
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var emailField: UITextField!
@@ -19,7 +21,8 @@ class LoginViewController: UIViewController {
         
         loginButton.layer.cornerRadius = 3
         // Do any additional setup after loading the view.
-        
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
         
     }
 
@@ -27,60 +30,49 @@ class LoginViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    // MARK: - Navigation
     
-    @IBAction func logIn(sender: UIButton) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        let prefs = NSUserDefaults.standardUserDefaults()
         
-        if let
-            deviceToken = prefs.stringForKey("deviceToken"),
-            email = emailField.text
-        {
-            Retriever.registerDeviceToken(email, deviceToken: deviceToken)
-        }
-        
-        performSegueWithIdentifier("transferLogin", sender: nil)
-        
-        /*if let
-            email = emailField.text,
-            accessCode = accessCodeField.text {
+    }
+    
+    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
+                withError error: NSError!) {
+        if (error == nil) {
+            let idToken = user.authentication.idToken // Safe to send to the server
             
-            Retriever.authenticate(email, accessCode: accessCode) { data, error in
-                if let user = data {
-                    if let email = user["email"].string {
-                        print(email)
-                    }
-                    
-                    if let authToken = user["authToken"].string {
-                        print(authToken)
-                    }
+            Retriever.authenticate(idToken) { data, error in
+                
+                if let error = error {
+                    print(error)
                 }
                 
-                if let requestError = error {
-                    print(requestError)
+                if let googleEmail = data?["email"].string,
+                    let apiKey = data?["apiKey"].string {
+                    
+                    let prefs = NSUserDefaults.standardUserDefaults()
+                    
+                    prefs.setValue(apiKey, forKey: "apiKey")
+                    prefs.setValue(googleEmail, forKey: "email")
+                    
+                    if let
+                        deviceToken = prefs.stringForKey("deviceToken")
+                    {
+                        Retriever.registerDeviceToken(googleEmail, deviceToken: deviceToken)
+                    }
+                    
+                    self.performSegueWithIdentifier("transferLogin", sender: nil)
                 }
             }
-        }*/
-        
+            
+        } else {
+            print("\(error.localizedDescription)")
+        }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let tabBarView = segue.destinationViewController as! UITabBarController
-        let splitView = tabBarView.viewControllers![0] as! UISplitViewController
-        let navView = splitView.viewControllers[0] as! UINavigationController
-        let finalView = navView.topViewController as! MasterViewController
-        
-        finalView.email = emailField.text
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!, withError error: NSError!) {
         
     }
 

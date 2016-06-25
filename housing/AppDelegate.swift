@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Google
+import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate, GIDSignInDelegate {
 
     var window: UIWindow?
 
@@ -18,12 +20,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         // Override point for customization after application launch.
         self.window?.tintColor = UIColor(red: 232 / 255, green: 46 / 255, blue: 65 / 255, alpha: 1)
         
-        let notificationTypes: UIUserNotificationType = [UIUserNotificationType.Alert, UIUserNotificationType.Badge, UIUserNotificationType.Sound]
-        let pushNotificationSettings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
         
-        application.registerUserNotificationSettings(pushNotificationSettings)
-        application.registerForRemoteNotifications()
-        
+        GIDSignIn.sharedInstance().delegate = self
         
         return true
     }
@@ -65,6 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        //GIDSignIn.sharedInstance().signOut()
     }
 
     // MARK: - Split view
@@ -78,6 +80,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         }
         return false
     }
-
+    
+    func application(application: UIApplication, openURL url: NSURL, options: [String: AnyObject]) -> Bool {
+        return GIDSignIn.sharedInstance().handleURL(
+                url,
+                sourceApplication: options[UIApplicationOpenURLOptionsSourceApplicationKey] as? String,
+                annotation: options[UIApplicationOpenURLOptionsAnnotationKey]
+        )
+    }
+    
+    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
+                withError error: NSError!) {
+        if (error == nil) {
+            // Perform any operations on signed in user here.
+            //let userId = user.userID                  // For client-side use only!
+            //let idToken = user.authentication.idToken // Safe to send to the server
+            //let fullName = user.profile.name
+            //let givenName = user.profile.givenName
+            //let familyName = user.profile.familyName
+            //let email = user.profile.email
+            
+        } else {
+            print("\(error.localizedDescription)")
+        }
+    }
+    
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!, withError error: NSError!) {
+        
+    }
+    
 }
 

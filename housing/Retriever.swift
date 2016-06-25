@@ -14,22 +14,13 @@ class Retriever: NSObject {
     
     static let baseURL = "https://uahousing.burgin.io/api/"
     
-    class func getSchedule(email : String, next: (JSON?, NSError?) -> ()) {
+    class func getSchedule(apiKey : String, next: (JSON?, NSError?) -> ()) {
         
         var params = [String: String]()
-        params["email"] = email
+        params["apiKey"] = apiKey
         
         executeRequest(.GET, encoding: .URL, urlExtender: "schedule", params: params, next: next)
         
-    }
-    
-    class func authenticate(email: String, accessCode: String, next: (JSON?, NSError?) -> ()) {
-        
-        var user = [String: String]()
-        user["email"] = email
-        user["accesscode"] = accessCode
-        
-        executeRequest(.POST, encoding: .JSON, urlExtender: "authenticate", params: user, next: next)
     }
     
     class func registerDeviceToken(email: String, deviceToken: String) {
@@ -42,6 +33,14 @@ class Retriever: NSObject {
                 print(err)
             }
         }
+    }
+    
+    class func authenticate(idToken: String, next: (JSON?, NSError?) -> ()) {
+        var user = [String: String]()
+        user["idToken"] = idToken
+        user["type"] = "ios"
+        
+        executeRequest(.POST, encoding: .JSON, urlExtender: "authenticate", params: user, next: next)
     }
     
     class func executeRequest(requestType: Alamofire.Method, encoding: Alamofire.ParameterEncoding, urlExtender: String, params: Dictionary<String, String>, next: (JSON?, NSError?) -> ()) {
